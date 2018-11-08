@@ -1,0 +1,58 @@
+先安装shadowsocks：
+
+sudo apt install shadowsocks
+
+创建json配置文件：
+
+sudo vim /etc/shadowsocks.json
+
+配置可以翻墙的服务器（在json文件中写入）：
+
+{
+    "server":"1.1.1.1"
+    "server_port":11111,
+    "local_address":"127.0.0.1",
+    "local_port":1080,
+    "password":"test1",
+    "timeout":100,
+    "method":"aes-256-cfb"
+}
+配置系统网络（通过socks host）：
+
+
+
+配置浏览器翻墙：
+
+
+
+
+
+然后需要修改环境变量，最好在～/.bashrc里添加，这样开新的session就不需要再export：
+
+export http_proxy="socks5://localhost:1080"
+
+export https_proxy=$http_proxy
+
+
+
+修改完环境变量后起shadowsocks：sslocal -c /etc/shadowsocks.json
+
+设置系统网络代理后运行curl google.com，有respond说明terminal翻墙成功。
+
+
+
+途中遇到了一个shadowsocks的bug：
+
+AttributeError: /usr/local/ssl/lib/libcrypto.so.1.1: undefined symbol: EVP_CIPHER_CTX_cleanup
+解决方法见：https://blog.lyz810.com/article/2016/09/shadowsocks-with-openssl-greater-than-110/
+
+
+
+
+
+大功告成！
+--------------------- 
+作者：ygfrancois 
+来源：CSDN 
+原文：https://blog.csdn.net/ygfrancois/article/details/80658070 
+版权声明：本文为博主原创文章，转载请附上博文链接！
